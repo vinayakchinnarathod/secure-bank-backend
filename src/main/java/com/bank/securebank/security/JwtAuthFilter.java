@@ -25,8 +25,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // TEMPORARILY BYPASS JWT AUTHENTICATION
-
         filterChain.doFilter(request, response);
     }
 }
