@@ -26,42 +26,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> {})
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/account/**").hasRole("USER")
-                        .requestMatchers("/api/transactions").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/loan/apply").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/loan/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/loan/*/approve").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/loan/*/reject").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/checkbook/request").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/checkbook/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/checkbook/*/approve").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/checkbook/*/reject").hasRole("ADMIN")
-                        .requestMatchers("/api/kyc/**").hasRole("USER")
-                        .requestMatchers("/api/documents/upload").hasRole("USER")
-                        .requestMatchers("/api/documents/user/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/documents/download/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/documents/view/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/documents/verify/**").hasRole("ADMIN")
-                        .requestMatchers("/api/documents/all").hasRole("ADMIN")
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/login").permitAll() // Added this line
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(sess ->
-                        sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .addFilterBefore(jwtAuthFilter,
-                        UsernamePasswordAuthenticationFilter.class);
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http.build();
-    }
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .anyRequest().permitAll()
+        );
+
+    return http.build();
+}
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
