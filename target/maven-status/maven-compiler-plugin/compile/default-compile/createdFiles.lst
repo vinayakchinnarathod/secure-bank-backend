@@ -17,8 +17,8 @@ com\bank\securebank\service\LoanService.class
 com\bank\securebank\SecureBankApplication.class
 com\bank\securebank\controller\LoanController.class
 com\bank\securebank\security\JwtUtil.class
+com\bank\securebank\controller\TestController.class
 com\bank\securebank\controller\TransactionController.class
-com\bank\securebank\controller\DocumentController$1.class
 com\bank\securebank\repository\LoanRepository.class
 com\bank\securebank\model\Document.class
 com\bank\securebank\model\Transaction.class
